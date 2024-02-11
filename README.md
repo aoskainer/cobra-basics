@@ -14,3 +14,9 @@ $ go install github.com/spf13/cobra-cli@latest
 $ go mod init github.com/aoskainer/cobra-basics
 $ cobra-cli init
 ```
+
+### サブコマンドを追加するときにやったこと
+
+```sh
+$ cobra-cli add guessgame
+```

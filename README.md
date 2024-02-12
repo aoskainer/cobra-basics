@@ -8,10 +8,14 @@
 
 ## 最初にやったこと
 
-### cobra-cliのインストール
+### いろいろインストール
 
 ```sh
+# CLIの生成用
 $ go install github.com/spf13/cobra-cli@latest
+
+# モックの生成用
+$ go install go.uber.org/mock/mockgen@latest
 ```
 
 ### 初期化
@@ -24,5 +28,5 @@ $ cobra-cli init
 ### サブコマンドを追加するときにやったこと
 
 ```sh
-$ cobra-cli add guessgame
+$ cobra-cli add [subcommand_name]
 ```

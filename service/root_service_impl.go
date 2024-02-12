@@ -3,39 +3,33 @@ package service
 import (
 	"fmt"
 	"math/rand"
+
+	utility "github.com/aoskainer/cobra-basics/utility/nocover"
 )
 
 type rootServiceImpl struct {
-	maxNumber int
-	target    int
+	maxNumber     int
+	target        int
+	userInputUtil utility.UserInputUtility
 }
 
 func (service *rootServiceImpl) Init() {
 	service.target = rand.Intn(service.maxNumber + 1)
+	service.userInputUtil = utility.NewUserInputUtility()
 }
 
 func (service *rootServiceImpl) Play() {
 	fmt.Printf("1から%dまでの数からランダムな値を選びました。当ててみてください。\n", service.maxNumber)
 
 	for {
-		guess := service.inputGuessNumber()
+		guess := service.userInputUtil.InputGuessNumber()
+
 		judgementResult := service.judgeGuessNumber(guess)
+
 		fmt.Println(judgementResult.message)
 		if judgementResult.result {
 			break
 		}
-	}
-}
-
-func (service *rootServiceImpl) inputGuessNumber() int {
-	for {
-		fmt.Print("あなたの予想: ")
-		var guess int
-		if _, err := fmt.Scanln(&guess); err != nil {
-			fmt.Println("有効な数値を入力してください。")
-			continue
-		}
-		return guess
 	}
 }
 

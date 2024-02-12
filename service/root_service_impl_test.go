@@ -3,14 +3,43 @@ package service
 import (
 	"testing"
 
+	mock_utility "github.com/aoskainer/cobra-basics/utility/nocover/mock"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/mock/gomock"
 )
 
+func TestInit(t *testing.T) {
+	service := rootServiceImpl{maxNumber: 10}
+
+	assert.NotPanics(t, func() {
+		service.Init()
+	})
+}
+
+func TestPlay(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	mockUserInputUtil := mock_utility.NewMockUserInputUtility(ctrl)
+	gomock.InOrder(
+		// 1回目の入力。4を入力して間違えたと仮定する。
+		mockUserInputUtil.EXPECT().InputGuessNumber().Return(4).Times(1),
+		// 2回目の入力。5を入力して正解したと仮定する。
+		mockUserInputUtil.EXPECT().InputGuessNumber().Return(5).Times(1),
+	)
+
+	service := rootServiceImpl{maxNumber: 10}
+	service.target = 5
+	service.userInputUtil = mockUserInputUtil
+
+	assert.NotPanics(t, func() {
+		service.Play()
+	})
+}
+
 func TestJudgeGuessNumber(t *testing.T) {
-	service := rootServiceImpl{
-		maxNumber: 10,
-		target:    5, // テストのために特定のターゲット値を設定
-	}
+	service := rootServiceImpl{maxNumber: 10}
+	service.target = 5
 
 	cases := []struct {
 		name     string

@@ -2,9 +2,11 @@ name: Run Tests and Generate Coverage Report
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - "*"
 
 # Unittestの結果を表示する際にこの設定がないと権限エラーが出ます。
 permissions: write-all

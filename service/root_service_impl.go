@@ -5,16 +5,16 @@ import (
 	"math/rand"
 )
 
-type guessGameServiceImpl struct {
+type rootServiceImpl struct {
 	maxNumber int
 	target    int
 }
 
-func (service *guessGameServiceImpl) Init() {
+func (service *rootServiceImpl) Init() {
 	service.target = rand.Intn(service.maxNumber + 1)
 }
 
-func (service *guessGameServiceImpl) Play() {
+func (service *rootServiceImpl) Play() {
 	fmt.Printf("1から%dまでの数からランダムな値を選びました。当ててみてください。\n", service.maxNumber)
 
 	for {
@@ -27,7 +27,7 @@ func (service *guessGameServiceImpl) Play() {
 	}
 }
 
-func (service *guessGameServiceImpl) inputGuessNumber() int {
+func (service *rootServiceImpl) inputGuessNumber() int {
 	for {
 		fmt.Print("あなたの予想: ")
 		var guess int
@@ -39,7 +39,7 @@ func (service *guessGameServiceImpl) inputGuessNumber() int {
 	}
 }
 
-func (service *guessGameServiceImpl) judgeGuessNumber(guess int) judgementResult {
+func (service *rootServiceImpl) judgeGuessNumber(guess int) judgementResult {
 	if guess < 1 || guess > service.maxNumber {
 		return judgementResult{
 			result:  false,

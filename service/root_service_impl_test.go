@@ -7,7 +7,7 @@ import (
 )
 
 func TestJudgeGuessNumber(t *testing.T) {
-	service := guessGameServiceImpl{
+	service := rootServiceImpl{
 		maxNumber: 10,
 		target:    5, // テストのために特定のターゲット値を設定
 	}

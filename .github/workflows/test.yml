@@ -1,4 +1,4 @@
-name: Go
+name: Run Tests and Generate Coverage Report
 
 on:
   push:
@@ -8,29 +8,53 @@ on:
 
 jobs:
   test:
-    name: Run Tests and Generate Coverage Report
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.21
-        id: go
+      - uses: actions/checkout@v3
 
-      - name: Check out code
-        uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.21.7
+
+      - name: Get dependencies
+        run: go mod tidy
+
+      # Go純正のツールだとGithub ActionsのCIと相性が悪そうなのでXML形式で出力してくれるものを使います。
+      - name: Setup go-junit-report
+        run: go install github.com/jstemmer/go-junit-report@latest
+
+      - name: Test
+        run: go test -v 2>&1 ./... | go-junit-report -set-exit-code > report.xml
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          junit_files: report.xml
+
+  coverage:
+    name: Generate Coverage Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.21.7
 
       - name: Get dependencies
         run: go mod tidy
 
       - name: Test and Coverage
-        run: |
-          go test -v ./... -coverprofile=coverage.out
-          go tool cover -html=coverage.out -o coverage.html
+        run: go test -v ./... -coverprofile=coverage.out
 
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v3
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          name: coverage-report
-          path: coverage.html
+          files: coverage.out
+          fail_ci_if_error: true
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

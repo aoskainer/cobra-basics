@@ -2,7 +2,6 @@ package service
 
 import (
 	"fmt"
-	"math/rand"
 
 	utility "github.com/aoskainer/cobra-basics/utility/nocover"
 )
@@ -11,11 +10,6 @@ type rootServiceImpl struct {
 	maxNumber     int
 	target        int
 	userInputUtil utility.UserInputUtility
-}
-
-func (service *rootServiceImpl) Init() {
-	service.target = rand.Intn(service.maxNumber + 1)
-	service.userInputUtil = utility.NewUserInputUtility()
 }
 
 func (service *rootServiceImpl) Play() {

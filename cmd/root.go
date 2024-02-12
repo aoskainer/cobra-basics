@@ -16,7 +16,6 @@ var (
 プレイヤーが数を推測すると、プログラムはその値に応じてヒントを提供します。`,
 		Run: func(cmd *cobra.Command, args []string) {
 			RootService := service.NewRootService(maxNumber)
-			RootService.Init()
 			RootService.Play()
 		},
 	}

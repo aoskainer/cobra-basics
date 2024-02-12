@@ -8,14 +8,6 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-func TestInit(t *testing.T) {
-	service := rootServiceImpl{maxNumber: 10}
-
-	assert.NotPanics(t, func() {
-		service.Init()
-	})
-}
-
 func TestPlay(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()

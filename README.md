@@ -1,5 +1,11 @@
 # cobra-basics
 
+[![Run Tests and Generate Coverage Report](https://github.com/aoskainer/cobra-basics/actions/workflows/test.yml/badge.svg)](https://github.com/aoskainer/cobra-basics/actions/workflows/test.yml)
+
+[![codecov](https://codecov.io/gh/aoskainer/cobra-basics/graph/badge.svg?token=W0HSTF9ZWF)](https://codecov.io/gh/aoskainer/cobra-basics)
+
+<br>
+
 ## 最初にやったこと
 
 ### cobra-cliのインストール

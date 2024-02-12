@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - "*"
+      - "**"
 
 # Unittestの結果を表示する際にこの設定がないと権限エラーが出ます。
 permissions: write-all
